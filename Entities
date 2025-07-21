@@ -1,0 +1,88 @@
+{
+  "name": "Module",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Module title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of the module"
+    },
+    "track": {
+      "type": "string",
+      "enum": [
+        "master_money",
+        "earn_more"
+      ],
+      "description": "Which track this module belongs to"
+    },
+    "order": {
+      "type": "number",
+      "description": "Order of the module within its track"
+    },
+    "duration": {
+      "type": "string",
+      "description": "Estimated time to complete"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": [
+        "beginner",
+        "intermediate",
+        "advanced"
+      ],
+      "default": "beginner",
+      "description": "Difficulty level"
+    },
+    "content": {
+      "type": "string",
+      "description": "Main lesson content"
+    },
+    "key_points": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Key takeaways from the module"
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "pdf",
+              "template",
+              "calculator",
+              "video",
+              "link"
+            ]
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Downloadable resources and tools"
+    }
+  },
+  "required": [
+    "title",
+    "track",
+    "order"
+  ],
+  "rls": {
+    "write": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
