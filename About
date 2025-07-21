@@ -1,0 +1,273 @@
+import React, { useState, useEffect } from "react";
+import { Module } from "@/entities/Module";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  Clock, 
+  Target, 
+  TrendingUp, 
+  Users,
+  BookOpen,
+  ArrowRight,
+  GraduationCap,
+  CheckCircle
+} from "lucide-react";
+
+export default function Curriculum() {
+  const [modules, setModules] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    loadModules();
+  }, []);
+
+  const loadModules = async () => {
+    try {
+      const moduleData = await Module.list("order");
+      setModules(moduleData);
+    } catch (error) {
+      console.error("Error loading modules:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const masterMoneyModules = modules.filter(m => m.track === "master_money");
+  const earnMoreModules = modules.filter(m => m.track === "earn_more");
+
+  const getDifficultyColor = (difficulty) => {
+    switch (difficulty) {
+      case "beginner": return "bg-green-100 text-green-700 border-green-200";
+      case "intermediate": return "bg-yellow-100 text-yellow-700 border-yellow-200";
+      case "advanced": return "bg-red-100 text-red-700 border-red-200";
+      default: return "bg-gray-100 text-gray-700 border-gray-200";
+    }
+  };
+
+  const TrackCard = ({ track, modules, icon: Icon, color, bgColor, borderColor }) => (
+    <div className={`${bgColor} ${borderColor} border-3 rounded-3xl p-8 space-y-6 relative overflow-hidden shadow-2xl`}>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent"></div>
+      <div className="flex items-center space-x-4 mb-6 relative z-10">
+        <div className={`w-20 h-20 ${color} rounded-3xl flex items-center justify-center shadow-2xl`}>
+          <Icon className="w-10 h-10 text-white" />
+        </div>
+        <div>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {track === "master_money" ? "Master Money" : "Earn More"}
+          </h2>
+          <p className="text-gray-700 text-lg font-medium">
+            {track === "master_money" ? "Essential Financial Skills" : "Income-Building Strategies"}
+          </p>
+        </div>
+      </div>
+
+      <div className="grid gap-4 relative z-10">
+        {modules.length > 0 ? (
+          modules.map((module) => (
+            <Card key={module.id} className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-white/90 backdrop-blur-sm border-2 border-gray-200/50">
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <CardTitle className="text-lg font-semibold text-gray-900 group-hover:text-teal-700 transition-colors">
+                      {module.title}
+                    </CardTitle>
+                    <p className="text-gray-600 text-sm mt-1 line-clamp-2">
+                      {module.description}
+                    </p>
+                  </div>
+                  <Badge className={getDifficultyColor(module.difficulty)} variant="outline">
+                    {module.difficulty}
+                  </Badge>
+                </div>
+              </CardHeader>
+              
+              <CardContent className="pt-0">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    {module.duration && (
+                      <div className="flex items-center">
+                        <Clock className="w-4 h-4 mr-1" />
+                        {module.duration}
+                      </div>
+                    )}
+                    <div className="flex items-center">
+                      <Users className="w-4 h-4 mr-1" />
+                      Module {module.order}
+                    </div>
+                  </div>
+                  
+                  <Link to={createPageUrl(`Module?id=${module.id}`)}>
+                    <Button 
+                      size="sm" 
+                      className="bg-teal-600 hover:bg-teal-700 text-white group-hover:shadow-md transition-all duration-200"
+                    >
+                      Start Module
+                      <ArrowRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        ) : (
+          <div className="text-center py-12 text-gray-500">
+            <BookOpen className="w-12 h-12 mx-auto mb-4 opacity-50" />
+            <p>Modules coming soon for this track!</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+        <div className="text-center relative z-10">
+          <div className="animate-spin w-16 h-16 border-4 border-white/30 border-t-white rounded-full mx-auto mb-4"></div>
+          <p className="text-white text-xl">Loading curriculum...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 py-12 relative overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-gradient-to-br from-green-400/15 to-emerald-500/15 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <Badge className="mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white border-0 shadow-xl">
+            <GraduationCap className="w-4 h-4 mr-2" />
+            Complete Curriculum
+          </Badge>
+          <div className="flex items-center justify-center mb-4">
+            <h1 className="text-5xl lg:text-6xl font-bold text-white">
+              Complete Curriculum
+            </h1>
+          </div>
+          <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+            Two comprehensive learning tracks designed to build your financial literacy and income potential.
+            Start with any module that interests you most. ✨
+          </p>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <Card className="text-center bg-white/95 backdrop-blur-sm border-0 shadow-2xl">
+            <CardContent className="pt-6">
+              <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                {modules.length}
+              </div>
+              <p className="text-gray-600 font-medium">Total Modules</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="text-center bg-white/95 backdrop-blur-sm border-0 shadow-2xl">
+            <CardContent className="pt-6">
+              <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">
+                2
+              </div>
+              <p className="text-gray-600 font-medium">Learning Tracks</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="text-center bg-white/95 backdrop-blur-sm border-0 shadow-2xl">
+            <CardContent className="pt-6">
+              <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">
+                100%
+              </div>
+              <p className="text-gray-600 font-medium">Free Forever</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Learning Tracks */}
+        <Tabs defaultValue="master_money" className="space-y-8">
+          <TabsList className="grid grid-cols-2 max-w-md mx-auto h-14 bg-white/90 backdrop-blur-sm border-0 shadow-xl rounded-2xl">
+            <TabsTrigger 
+              value="master_money" 
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white font-bold text-lg rounded-xl"
+            >
+              <Target className="w-5 h-5 mr-2" />
+              Master Money
+            </TabsTrigger>
+            <TabsTrigger 
+              value="earn_more"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white font-bold text-lg rounded-xl"
+            >
+              <TrendingUp className="w-5 h-5 mr-2" />
+              Earn More
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="master_money">
+            <TrackCard
+              track="master_money"
+              modules={masterMoneyModules}
+              icon={Target}
+              color="bg-gradient-to-br from-emerald-500 to-teal-600"
+              bgColor="bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50"
+              borderColor="border-emerald-300"
+            />
+          </TabsContent>
+
+          <TabsContent value="earn_more">
+            <TrackCard
+              track="earn_more"
+              modules={earnMoreModules}
+              icon={TrendingUp}
+              color="bg-gradient-to-br from-purple-500 to-pink-600"
+              bgColor="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50"
+              borderColor="border-purple-300"
+            />
+          </TabsContent>
+        </Tabs>
+
+        {/* Call to Action */}
+        <div className="mt-16 text-center">
+          <Card className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 border-0 text-white shadow-2xl">
+            <CardContent className="py-12">
+              <h3 className="text-3xl font-bold mb-4">Ready to Start Your Financial Journey?</h3>
+              <p className="text-orange-100 mb-6 max-w-2xl mx-auto text-lg">
+                Pick any module that interests you and begin building the financial skills that will serve you for life. ✨
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to={createPageUrl("Tools")}>
+                  <Button 
+                    size="lg"
+                    className="bg-white text-orange-600 hover:bg-gray-100 font-bold px-8 py-4 rounded-xl shadow-xl"
+                  >
+                    Explore Free Tools
+                    <CheckCircle className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+                <Link to={createPageUrl("Help")}>
+                  <Button 
+                    variant="outline"
+                    size="lg"
+                    className="border-2 border-white text-white hover:bg-white/20 font-bold px-8 py-4 rounded-xl"
+                  >
+                    Get Help & Support
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
