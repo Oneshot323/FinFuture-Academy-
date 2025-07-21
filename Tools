@@ -1,0 +1,279 @@
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Calculator, 
+  FileText, 
+  Download,
+  ExternalLink,
+  PiggyBank,
+  TrendingUp,
+  CreditCard,
+  Building,
+  Smartphone,
+  Lightbulb
+} from "lucide-react";
+
+export default function Tools() {
+  const tools = [
+    {
+      category: "Budgeting & Saving",
+      icon: PiggyBank,
+      color: "from-green-500 to-green-600",
+      bgColor: "bg-green-50",
+      borderColor: "border-green-200",
+      items: [
+        {
+          title: "Monthly Budget Template",
+          description: "Simple spreadsheet to track income and expenses",
+          type: "template",
+          status: "available"
+        },
+        {
+          title: "50/30/20 Budget Calculator",
+          description: "Automatically split your income into needs, wants, and savings",
+          type: "calculator", 
+          status: "coming_soon"
+        },
+        {
+          title: "Emergency Fund Tracker",
+          description: "Visual tracker for building your emergency savings",
+          type: "template",
+          status: "available"
+        }
+      ]
+    },
+    {
+      category: "Credit & Debt",
+      icon: CreditCard,
+      color: "from-blue-500 to-blue-600", 
+      bgColor: "bg-blue-50",
+      borderColor: "border-blue-200",
+      items: [
+        {
+          title: "Debt Snowball Calculator",
+          description: "Plan your debt payoff strategy with visual progress",
+          type: "calculator",
+          status: "coming_soon"
+        },
+        {
+          title: "Credit Score Improvement Checklist",
+          description: "Step-by-step actions to boost your credit score",
+          type: "pdf",
+          status: "available"
+        }
+      ]
+    },
+    {
+      category: "Investing & Growth",
+      icon: TrendingUp,
+      color: "from-purple-500 to-purple-600",
+      bgColor: "bg-purple-50", 
+      borderColor: "border-purple-200",
+      items: [
+        {
+          title: "Compound Interest Calculator",
+          description: "See how your investments can grow over time",
+          type: "calculator",
+          status: "coming_soon"
+        },
+        {
+          title: "Investment Goal Planner",
+          description: "Plan how much to invest to reach your financial goals",
+          type: "template",
+          status: "available"
+        }
+      ]
+    },
+    {
+      category: "Income & Business",
+      icon: Building,
+      color: "from-orange-500 to-orange-600",
+      bgColor: "bg-orange-50",
+      borderColor: "border-orange-200", 
+      items: [
+        {
+          title: "Side Hustle Income Tracker",
+          description: "Track earnings from multiple income streams",
+          type: "template",
+          status: "available"
+        },
+        {
+          title: "Business Startup Cost Calculator",
+          description: "Estimate costs for starting your small business",
+          type: "calculator",
+          status: "coming_soon"
+        },
+        {
+          title: "Freelance Rate Calculator",
+          description: "Determine fair pricing for your services",
+          type: "calculator",
+          status: "available"
+        }
+      ]
+    },
+    {
+      category: "AI & Digital Tools",
+      icon: Smartphone,
+      color: "from-teal-500 to-teal-600",
+      bgColor: "bg-teal-50",
+      borderColor: "border-teal-200",
+      items: [
+        {
+          title: "AI Prompt Library for Finance",
+          description: "Ready-to-use ChatGPT prompts for financial planning",
+          type: "pdf",
+          status: "available"
+        },
+        {
+          title: "Canva Templates for Marketing",
+          description: "Professional designs for your side business",
+          type: "template",
+          status: "coming_soon"
+        }
+      ]
+    }
+  ];
+
+  const getToolIcon = (type) => {
+    switch (type) {
+      case "calculator": return Calculator;
+      case "template": return Download;
+      case "pdf": return FileText;
+      default: return FileText;
+    }
+  };
+
+  const getStatusBadge = (status) => {
+    if (status === "available") {
+      return <Badge className="bg-green-100 text-green-700 border-green-200">Available</Badge>;
+    } else {
+      return <Badge variant="outline" className="text-gray-600">Coming Soon</Badge>;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 py-12 relative overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-gradient-to-br from-green-400/15 to-emerald-500/15 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <Badge className="mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white border-0 shadow-xl">
+            <Lightbulb className="w-4 h-4 mr-2" />
+            Free Tools & Resources
+          </Badge>
+          <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
+            Free Tools & Resources
+          </h1>
+          <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+            Practical calculators, templates, and guides to help you apply what you learn. 
+            All tools are completely free and designed for easy use on any device. ✨
+          </p>
+        </div>
+
+        {/* Tools Grid */}
+        <div className="space-y-12">
+          {tools.map((category, categoryIndex) => (
+            <div key={categoryIndex}>
+              <Card className={`${category.bgColor} ${category.borderColor} border-3 overflow-hidden bg-white/95 backdrop-blur-sm shadow-2xl`}>
+                <CardHeader className="pb-4">
+                  <div className="flex items-center space-x-4">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${category.color} rounded-2xl flex items-center justify-center shadow-xl`}>
+                      <category.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-3xl font-bold text-gray-900">
+                        {category.category}
+                      </CardTitle>
+                      <p className="text-gray-600 text-lg">
+                        {category.items.length} tool{category.items.length !== 1 ? 's' : ''} available
+                      </p>
+                    </div>
+                  </div>
+                </CardHeader>
+                
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {category.items.map((tool, toolIndex) => {
+                      const ToolIcon = getToolIcon(tool.type);
+                      return (
+                        <Card key={toolIndex} className="group bg-white/90 backdrop-blur-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-2 border-gray-200/50">
+                          <CardContent className="p-6">
+                            <div className="flex items-start justify-between mb-4">
+                              <ToolIcon className="w-8 h-8 text-gray-600 group-hover:text-teal-600 transition-colors" />
+                              {getStatusBadge(tool.status)}
+                            </div>
+                            
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-teal-700 transition-colors">
+                              {tool.title}
+                            </h3>
+                            <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                              {tool.description}
+                            </p>
+                            
+                            <Button 
+                              className={`w-full ${
+                                tool.status === "available" 
+                                  ? "bg-teal-600 hover:bg-teal-700 text-white shadow-lg" 
+                                  : "bg-gray-100 text-gray-500 cursor-not-allowed"
+                              }`}
+                              disabled={tool.status !== "available"}
+                            >
+                              {tool.status === "available" ? (
+                                <>
+                                  {tool.type === "calculator" ? "Use Calculator" : "Download"}
+                                  <ExternalLink className="w-4 h-4 ml-2" />
+                                </>
+                              ) : (
+                                "Coming Soon"
+                              )}
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </div>
+
+        {/* Feature Notice */}
+        <Card className="mt-16 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 border-0 text-white shadow-2xl">
+          <CardContent className="p-8 lg:p-12 text-center">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+              More Tools Coming Soon!
+            </h2>
+            <p className="text-lg text-orange-100 mb-6 max-w-2xl mx-auto">
+              We're actively building more calculators, templates, and resources based on student feedback. 
+              Have a specific tool you'd like to see? Let us know! ✨
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg"
+                className="bg-white text-orange-600 hover:bg-gray-100 font-bold px-8 py-4 rounded-xl shadow-xl"
+              >
+                Request a Tool
+                <Lightbulb className="w-5 h-5 ml-2" />
+              </Button>
+              <Button 
+                variant="outline"
+                size="lg"
+                className="border-2 border-white text-white hover:bg-white/20 font-bold px-8 py-4 rounded-xl"
+              >
+                View Curriculum
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
