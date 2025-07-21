@@ -1,0 +1,232 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { createPageUrl } from "@/utils";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { 
+  Heart, 
+  Users, 
+  Target, 
+  Lightbulb,
+  GraduationCap,
+  Smartphone,
+  Globe,
+  Star
+} from "lucide-react";
+
+export default function About() {
+  const values = [
+    {
+      icon: Heart,
+      title: "Accessibility First",
+      description: "100% free, mobile-optimized, and designed for users with varying tech skills."
+    },
+    {
+      icon: Users,
+      title: "Student-Led",
+      description: "Created by students who understand the real challenges of financial education."
+    },
+    {
+      icon: Target,
+      title: "Practical Focus",
+      description: "Real-world skills you can apply immediately to improve your financial situation."
+    },
+    {
+      icon: Globe,
+      title: "Inclusive Community",
+      description: "Designed specifically for underserved teens, families, and small business owners."
+    }
+  ];
+
+  const features = [
+    "No hidden fees or subscriptions - ever",
+    "Mobile-first design for learning on the go", 
+    "Downloadable PDFs and templates",
+    "Modern income strategies (AI tools, digital hustles)",
+    "Traditional financial literacy fundamentals",
+    "Youth-friendly, non-intimidating language"
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 py-12 relative overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/3 right-1/3 w-64 h-64 bg-gradient-to-br from-green-400/15 to-emerald-500/15 rounded-full blur-3xl animate-pulse delay-700"></div>
+      </div>
+      
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <Badge className="mb-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white border-0 shadow-xl">
+            💙 Our Mission
+          </Badge>
+          <h1 className="text-5xl lg:text-6xl font-bold text-white mb-6">
+            Financial Education for{" "}
+            <span className="bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+              Everyone
+            </span>
+          </h1>
+          <p className="text-xl text-purple-100 leading-relaxed">
+            FinFuture Academy was born from a simple belief: financial literacy shouldn't be a privilege. 
+            Every student, family, and small business owner deserves access to the tools and knowledge 
+            needed to build a secure financial future. ✨
+          </p>
+        </div>
+
+        {/* Mission Statement */}
+        <Card className="mb-12 overflow-hidden bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 border-0 text-white shadow-2xl">
+          <CardContent className="p-8 lg:p-12 text-center">
+            <GraduationCap className="w-20 h-20 mx-auto mb-6 text-white drop-shadow-lg" />
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">Our Purpose</h2>
+            <p className="text-lg text-orange-100 leading-relaxed max-w-3xl mx-auto">
+              We're building a comprehensive, accessible financial education platform that empowers 
+              underserved communities with both traditional money management skills and modern 
+              income-building strategies. Our content is student-created, peer-reviewed, and 
+              completely free forever.
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Core Values */}
+        <div className="mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-4">What We Stand For</h2>
+            <p className="text-lg text-purple-200">
+              The principles that guide everything we do
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {values.map((value, index) => (
+              <Card key={index} className="group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-white/95 backdrop-blur-sm border-0 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white to-gray-50 opacity-90"></div>
+                <CardContent className="p-8 relative z-10">
+                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200 shadow-xl">
+                    <value.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    {value.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {value.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* What Makes Us Different */}
+        <div className="mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-4">What Makes Us Different</h2>
+            <p className="text-lg text-purple-200">
+              More than just another financial education site
+            </p>
+          </div>
+
+          <Card className="bg-white/95 backdrop-blur-sm border-0 shadow-2xl">
+            <CardContent className="p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <div className="space-y-4">
+                    {features.map((feature, index) => (
+                      <div key={index} className="flex items-start space-x-3">
+                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 shadow-lg">
+                          <Star className="w-4 h-4 text-white" />
+                        </div>
+                        <p className="text-gray-700 font-medium">{feature}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-3xl p-8 text-center shadow-xl">
+                  <Smartphone className="w-20 h-20 mx-auto mb-4 text-blue-600" />
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    Mobile-First Learning
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    Designed for busy students and families who need to learn on the go. 
+                    Every lesson works perfectly on your phone, tablet, or computer.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Learning Tracks Overview */}
+        <div className="mb-16">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-4">Our Two-Track Approach</h2>
+            <p className="text-lg text-purple-200">
+              Comprehensive education that covers both foundation skills and modern opportunities
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8">
+            <Card className="bg-gradient-to-br from-emerald-100 via-teal-100 to-cyan-100 border-3 border-emerald-300 shadow-2xl">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mb-4 shadow-xl">
+                  <Target className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-3">
+                  Track 1: Master Money
+                </h3>
+                <p className="text-gray-700 mb-4 text-lg">
+                  Essential financial literacy skills for stability and control. Budgeting, saving, 
+                  credit, banking, investing basics, and avoiding common financial traps.
+                </p>
+                <Badge className="bg-emerald-200 text-emerald-800 border-emerald-300 shadow-lg">
+                  7 Core Modules
+                </Badge>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-purple-100 via-pink-100 to-rose-100 border-3 border-purple-300 shadow-2xl">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-4 shadow-xl">
+                  <Lightbulb className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-3">
+                  Track 2: Earn More
+                </h3>
+                <p className="text-gray-700 mb-4 text-lg">
+                  Modern strategies to build and grow income. Side hustles, entrepreneurship, 
+                  marketing basics, and leveraging AI tools for productivity and earnings.
+                </p>
+                <Badge className="bg-purple-200 text-purple-800 border-purple-300 shadow-lg">
+                  4 Growth Modules
+                </Badge>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Call to Action */}
+        <Card className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 border-0 text-white text-center shadow-2xl">
+          <CardContent className="p-8 lg:p-12">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+              Ready to Start Your Financial Journey?
+            </h2>
+            <p className="text-lg text-orange-100 mb-6 max-w-2xl mx-auto">
+              Join thousands of students already building better financial habits and discovering 
+              new ways to create income. Your future self will thank you. ✨
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to={createPageUrl("Curriculum")}>
+                <Button className="bg-white text-orange-600 hover:bg-gray-100 px-10 py-5 text-xl font-bold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110">
+                  Start Learning Free
+                  <GraduationCap className="w-6 h-6 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
